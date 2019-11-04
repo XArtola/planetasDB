@@ -5,20 +5,24 @@
 <body>
 
   <?php
-  echo "<h1>llega bien</h1>";
-  $hostname = "192.168.1.20:3306";
+
+  //PARAMETROS DE CONFIGURACÓN DE LA CONEXIÓN
+
+  $hostname = "192.168.1.52:3306";
   $username = "xabi";
   $password = "1234";
   $db = "base";
 
+  //Inicializar conexión
   $dbconnect = mysqli_connect($hostname, $username, $password, $db);
 
+  //Si se da algun error de conexión mostrarlo
   if ($dbconnect->connect_error) {
     die("Conexión fallida: " . $dbconnect->connect_error);
   }
 
   ?>
-
+  <h1>Planetas</h1>
   <table border="1" align="center">
     <tr>
       <td>id</td>
@@ -29,18 +33,16 @@
       <td>climate</td>
       <td>gravity</td>
       <td>terrain</td>
-      <td>rotation_period</td>
       <td>surface_water</td>
       <td>population</td>
-      <td>rotation_period</td>
       <td>url</td>
     </tr>
 
     <?php
-
+    //Hacer una consulta para recoger todos las columnas que querermos de cada planeta (todas excepto fecha creación y fecha actualización)
     $query = mysqli_query($dbconnect, "SELECT id, name, rotation_period, orbital_period, diameter, climate, gravity, terrain, surface_water, population, url FROM planet")
       or die(mysqli_error($dbconnect));
-
+    //Mientas haya filas en los resultados obtenidos generar una nueva fila
     while ($row = mysqli_fetch_array($query)) {
 
       echo "<tr>";
